@@ -1,0 +1,24 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<div class="container">
+    <div id='chat_message'>
+
+    </div>
+
+    {%for chat in chat_messages%}
+        {{chat}}
+    {%endfor%}
+    <form
+        hx-ext='ws'
+        ws-connect='/ws/chatroom/public-chat'
+        ws-send>
+        {%csrf_token%}
+
+        {{chat_form}}
+        <button type='submit'>post</button>
+    </form>
+
+</div>
+{%endblock%}
+

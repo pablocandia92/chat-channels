@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{%block content%}
+<div class="div_user">
+    <form method='POST' class='chat_body container-sm d-flex flex-column align-items-center pt-5 pb-5'>
+        {%csrf_token%}
+            <h2>
+                {%block h2%}
+
+                {%endblock%}
+            </h2>
+            {%for form in user_form%}
+            <div class="d-flex flex-column mt-2 w-50">
+                {{form.label_tag}}
+                {{form|add_class:"form-control"}}
+            </div>
+            {%endfor%}
+        <button type="submit" class="btn btn-success mt-3">
+            {%block btn-submit%}
+            
+            {%endblock%}
+        </button>
+    </form>
+</div>
+
+<style>
+    .chat_body{
+        border: 5px solid #242422;
+    }
+
+    .div_user{
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+{%endblock%}
