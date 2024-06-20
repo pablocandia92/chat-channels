@@ -1,0 +1,6 @@
+env
+chat_channels/a_chat/__pycache__
+chat_channels/a_users/__pycache__
+chat_channels/chat_channels/__pycache__
+chat_channels/db.sqlite3
+chat_channels/a_chat/migrations/__pycache__
