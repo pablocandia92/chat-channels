@@ -30,9 +30,10 @@ class CustomUserCreationForm(forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         country_code = self.cleaned_data.get('country')
+        country_code_number = phonenumbers.country_code_for_region(country_code)
         phone = self.cleaned_data.get('phone')
 
-        combined_phone = f"{country_code}{phone}"
+        combined_phone = f"{country_code_number}{phone}"
 
         user.phone = combined_phone
 
