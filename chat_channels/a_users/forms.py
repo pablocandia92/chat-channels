@@ -33,9 +33,12 @@ class CustomUserCreationForm(forms.ModelForm):
         country_code_number = phonenumbers.country_code_for_region(country_code)
         phone = self.cleaned_data.get('phone')
 
-        combined_phone = f"{country_code_number}{phone}"
+        combined_phone = f"+{country_code_number}-{phone}"
 
         user.phone = combined_phone
+
+        password = self.cleaned_data.get('password1')
+        user.set_password(password)
 
         if commit:
             user.save()

@@ -3,15 +3,22 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, full_name, phone, password=None, skip_email_check=False, **extra_fields):
+    def create_user(self, email, full_name, phone, password=None, **extra_fields):
         email = self.normalize_email(email)
 
         if User.objects.filter(email=email).exists():
             raise ValueError('El Email ya ha sido registrado')
-
+        
+        # elif User.objects.filter(phone=phone).exists():
+        #     raise ValueError('Phone alredy register')
+        
         user = self.model(email=email, full_name=full_name, phone=phone, **extra_fields)
 
-        user.set_password(password)
+        if password:
+            user.set_password(password)
+        else:
+            raise ValueError('La contraseña es obligatoria')
+        
         user.save(using=self._db)
         return user
     
