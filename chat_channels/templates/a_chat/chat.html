@@ -1,24 +1,66 @@
 {%extends 'base.html'%}
 
 {%block content%}
-<div class="container">
     <div id='chat_message'>
-
+        {%include "a_chat/partials/chat_message.html"%}
     </div>
-
-    {%for chat in chat_messages%}
-        {{chat}}
-    {%endfor%}
     <form
+        class="chat_message_form d-flex"
         hx-ext='ws'
         ws-connect='/ws/chatroom/public-chat'
-        ws-send>
+        ws-send
+        htmx:wsAfterSend="detail.message"
+        hx-ws-onmessage='processMessage'>
         {%csrf_token%}
 
-        {{chat_form}}
+        {{chat_form.body}}
         <button type='submit'>post</button>
     </form>
 
-</div>
+
+    <script>
+        document.body.addEventListener('htmx:wsAfterMessage', function(event) {
+            const messageDetail = event.detail.message;
+            console.log(event)
+    
+            // Assuming messageDetail contains the new chat message HTML
+            const messageElement = document.createElement('div');
+            messageElement.innerHTML = messageDetail;
+    
+            const chatMessageContainer = document.getElementById('chat_message');
+            chatMessageContainer.appendChild(messageElement);
+    
+            // Optionally, scroll to the new message
+            chatMessageContainer.scrollTop = chatMessageContainer.scrollHeight;
+        });
+    
+        function processMessage(event) {
+            const data = JSON.parse(event.data);
+            const messageElement = document.createElement('div');
+            messageElement.innerHTML = data.html;
+    
+            const chatMessageContainer = document.getElementById('chat_message');
+            chatMessageContainer.appendChild(messageElement);
+        }
+    </script>
+    
+
+<style>
+    #chat_message{
+        width: 100%;
+        height: calc(100% - 70px);
+        overflow-y: scroll;
+        overflow-x: auto;
+    }
+    .chat_message_form{
+        height: 70px;
+        width: 100%;
+    }
+
+    .chat_message_form textarea{
+        width: 100%;
+        resize: none;
+    }
+</style>
 {%endblock%}
 

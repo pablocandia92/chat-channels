@@ -2,7 +2,7 @@ from typing import Any
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from django.contrib.auth.views import LoginView
-
+from django.urls import reverse
 from django.http import HttpResponse
 
 
@@ -17,7 +17,7 @@ def register(request):
         user_form=CustomUserCreationForm(request.POST)
         if user_form.is_valid():
             user_form.save()
-        
+            
 
             return HttpResponse('Registrado')
         
@@ -32,9 +32,17 @@ class CustomLoginView(LoginView):
     template_name = 'a_users/login.html'
     form_class = CustomAuthenticationForm
     fields = '__all__'
-    redirect_authenticated_user = True
-    success_url='public-chat'
 
+    def get_success_url(self):
+        print('aa')
+        return reverse('chatroom', kwargs={'chatroom_name': 'public-chat'})
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            print('authenticado')
+            return redirect(self.get_success_url())
+        print('zzzz')
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs: Any):
         ctx = super().get_context_data(**kwargs)

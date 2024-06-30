@@ -1,0 +1,31 @@
+
+{% for chat in chat_messages reversed %}
+    {%if request.user == chat.author%}
+        <div class="d-flex user">
+            <div>
+                {{ chat.body }}
+            </div>
+        </div>
+    {%else%}
+        <div class="d-flex non-user">
+            <div>
+                {{ chat.author.full_name }}
+            </div>
+            <div>
+                {{ chat.body }}
+            </div>
+        </div>
+    {%endif%}
+{% endfor %}
+
+
+<style>
+    .user {
+        background-color: red;
+        flex-direction: row-reverse;
+    }
+
+    .non-user {
+        background-color: ghostwhite;
+    }
+</style>

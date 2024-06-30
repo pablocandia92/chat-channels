@@ -10,10 +10,50 @@
     <script src="https://unpkg.com/htmx.org/dist/htmx.js"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
 </head>
+<header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Chattt</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Create Room</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Join Room</a>
+              </li>
+            </ul>
+            <div class="d-flex">
+                <div>
+                    <p>user</p>
+                </div>
+                <div>
+                    <button>LogOut</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+</header>
 <body class="body">
-    {%block content%}
-    
-    {%endblock%}
+    <div class='d-flex chat'>
+        <div class="w-25 chat__list">
+            <p>111111</p>
+            <p>222222</p>
+            <p>333333</p>
+            <p>444444</p>
+            <p>555555</p>
+        </div>
+        <div class="w-75 chat__content">
+            {%block content%}
+            
+            {%endblock%}
+        </div>
+    </div>
+
 </body>
 
 <style>
@@ -22,9 +62,21 @@
         padding: 0;
         box-sizing: border-box;
     }
-    .body {
-        height: 100vh;
-        background-color: #eeebe5;
-    }
+
+        body {
+            height: calc(100vh - 56px);
+            margin: 0;
+            padding: 0;
+        }
+        .chat {
+            height: 100%;
+        }
+        .chat__list {
+            overflow-y: auto;
+            border-right: 1px solid #ccc;
+        }
+        .chat__content {
+            overflow-y: auto;
+        }
 </style>
 </html>

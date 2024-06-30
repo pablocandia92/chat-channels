@@ -18,6 +18,7 @@ def chat_view(request, chatroom_name):
             chat_form.save(commit=False)
             chat_form.group = chat_group
             chat_form.author = request.user
+            chat_form.save()
             
 
     return render(request, 'a_chat/chat.html', ctx)

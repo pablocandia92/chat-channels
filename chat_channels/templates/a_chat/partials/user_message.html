@@ -1,0 +1,16 @@
+{%if request_user == user%}
+<div class="d-flex user">
+    <div>
+        {{ message.body }}
+    </div>
+</div>
+{%else%}
+<div class="d-flex non-user">
+    <div>
+        {{ message.author.full_name }}
+    </div>
+    <div>
+        {{ message.body }}
+    </div>
+</div>
+{%endif%}
