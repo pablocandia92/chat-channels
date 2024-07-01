@@ -1,17 +1,17 @@
 
 {% for chat in chat_messages reversed %}
     {%if request.user == chat.author%}
-        <div class="d-flex user">
-            <div>
+        <div class="d-flex flex-row-reverse mt-3 mb-2">
+            <div class="user p-1 mr-4">
                 {{ chat.body }}
             </div>
         </div>
     {%else%}
-        <div class="d-flex non-user">
-            <div>
+        <div class="d-flex flex-column mt-3 mb-4 w-50 p-1 non-user">
+            <div class="non-use__author">
                 {{ chat.author.full_name }}
             </div>
-            <div>
+            <div class="non-user__message">
                 {{ chat.body }}
             </div>
         </div>
@@ -21,11 +21,23 @@
 
 <style>
     .user {
-        background-color: red;
-        flex-direction: row-reverse;
+        width: auto !important;
+        background-color: grey;
+        border: 1px solid black;
+        border-radius: 15px;
+        margin-right: 15px;
     }
 
     .non-user {
-        background-color: ghostwhite;
+        background-color: grey;
+        border: 1px solid black;
+        border-radius: 15px;
+        margin-left: 15px;
+
+    }
+
+    .non-user__message {
+        font-size: 1.2rem;
+
     }
 </style>

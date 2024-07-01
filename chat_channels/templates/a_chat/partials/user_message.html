@@ -1,16 +1,16 @@
-{%if request_user == user%}
-<div class="d-flex user">
-    <div>
-        {{ message.body }}
+{%if is_owner%}
+    <div class="d-flex flex-row-reverse m2-3 mb-2">
+        <div class="w-50 user p-1">
+            {{ message.body }}
+        </div>
     </div>
-</div>
 {%else%}
-<div class="d-flex non-user">
-    <div>
-        {{ message.author.full_name }}
+    <div class="d-flex non-user">
+        <div>
+            {{ message.author.full_name }}
+        </div>
+        <div>
+            {{ message.body }}
+        </div>
     </div>
-    <div>
-        {{ message.body }}
-    </div>
-</div>
 {%endif%}

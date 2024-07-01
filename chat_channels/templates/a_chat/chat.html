@@ -9,8 +9,7 @@
         hx-ext='ws'
         ws-connect='/ws/chatroom/public-chat'
         ws-send
-        htmx:wsAfterSend="detail.message"
-        hx-ws-onmessage='processMessage'>
+        htmx:wsAfterSend="detail.message">
         {%csrf_token%}
 
         {{chat_form.body}}
@@ -19,29 +18,32 @@
 
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const chatMessageContainer = document.getElementById('chat_message');
+            if (chatMessageContainer) {
+                chatMessageContainer.scrollTop = chatMessageContainer.scrollHeight;
+            }
+        });
+
+        
+
         document.body.addEventListener('htmx:wsAfterMessage', function(event) {
             const messageDetail = event.detail.message;
             console.log(event)
     
-            // Assuming messageDetail contains the new chat message HTML
             const messageElement = document.createElement('div');
             messageElement.innerHTML = messageDetail;
     
             const chatMessageContainer = document.getElementById('chat_message');
             chatMessageContainer.appendChild(messageElement);
     
-            // Optionally, scroll to the new message
             chatMessageContainer.scrollTop = chatMessageContainer.scrollHeight;
+
+            //clear text area input
+            document.getElementById('id_body').value = "";
+
         });
     
-        function processMessage(event) {
-            const data = JSON.parse(event.data);
-            const messageElement = document.createElement('div');
-            messageElement.innerHTML = data.html;
-    
-            const chatMessageContainer = document.getElementById('chat_message');
-            chatMessageContainer.appendChild(messageElement);
-        }
     </script>
     
 
